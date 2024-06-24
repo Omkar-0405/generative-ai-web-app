@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
  * @license
  * Copyright 2023 Google LLC
@@ -51,12 +51,17 @@
 
       async function run(prompt, files) {
         const imageParts = await Promise.all(
-          [...files].map(fileToGenerativePart),
+          [...files].map(fileToGenerativePart)
         );
 
         const model = await getGenerativeModel({
           model: "gemini-1.5-flash-latest",
         });
+
+        console.log(
+          "model",
+          model.generateContentStream([...imageParts, prompt])
+        );
 
         return model.generateContentStream([...imageParts, prompt]);
       }
@@ -83,7 +88,7 @@
           updateUI(
             resultEl,
             () => run(promptEl.value, fileInputEl.files),
-            true,
+            true
           );
         });
     </script>
